@@ -4,6 +4,8 @@ import SignIn from "../pages/SignIn.vue";
 import Home from "../pages/Home.vue";
 import User from "../pages/User.vue";
 
+import { useAuthStore } from "../stores/auth";
+
 const routes = [
   {
     path: "/sign-up",
@@ -36,6 +38,16 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {});
+router.beforeEach((to) => {
+  const store = useAuthStore();
+
+  if (to.meta.requiresAuth && !store.isLoggedIn) {
+    return { name: "SignIn" };
+  }
+
+  if (!to.meta.requiresAuth && store.isLoggedIn) {
+    return false;
+  }
+});
 
 export default router;

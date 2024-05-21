@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import {
   createUserWithEmailAndPassword,
@@ -8,33 +8,43 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 
-const router = useRouter();
-
 export const useAuthStore = defineStore("auth", () => {
   const user = ref<null | User>(null);
+  const isLoggedIn = computed(() => user.value !== null);
+
+  const router = useRouter();
 
   const signUp = async (email: string, password: string) => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      user.value = userCredential.user;
       router.push({ name: "User" });
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) alert(error.message);
     }
   };
 
   const signIn = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      user.value = userCredential.user;
       router.push({ name: "User" });
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) alert(error.message);
     }
   };
 
   return {
     user,
+    isLoggedIn,
     signUp,
     signIn,
   };
