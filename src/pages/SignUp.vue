@@ -2,17 +2,23 @@
   <h1>Регистрация</h1>
   <form @submit.prevent="onSubmit">
     <p>
-      <input type="email" required placeholder="Email" v-model.trim="email" />
+      <input
+        type="email"
+        required
+        placeholder="Email"
+        :disabled="isLoading"
+        v-model.trim="email" />
     </p>
     <p>
       <input
         type="password"
         required
         placeholder="Пароль"
+        :disabled="isLoading"
         v-model.trim="password" />
     </p>
     <p>
-      <button type="submit">Зарегистрироваться</button>
+      <button type="submit" :disabled="isLoading">Зарегистрироваться</button>
     </p>
   </form>
 </template>
@@ -23,10 +29,13 @@ import { useAuthStore } from "../stores/auth";
 
 const email = ref("");
 const password = ref("");
+const isLoading = ref(false);
 
 const store = useAuthStore();
 
 const onSubmit = async () => {
-  store.signUp(email.value, password.value);
+  isLoading.value = true;
+  await store.signUp(email.value, password.value);
+  isLoading.value = false;
 };
 </script>
