@@ -15,6 +15,10 @@
       <button type="submit">Зарегистрироваться</button>
     </p>
   </form>
+  <p>
+    Уже зарегистрированы?
+    <RouterLink to="/sign-in">Войти</RouterLink>
+  </p>
 </template>
 
 <script setup lang="ts">
