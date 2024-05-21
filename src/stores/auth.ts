@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -10,6 +11,7 @@ export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = ref(false);
   const user = ref(null);
   const auth = getAuth();
+  const router = useRouter();
 
   const signUp = async (email: string, password: string) => {
     try {
@@ -18,6 +20,9 @@ export const useAuthStore = defineStore("auth", () => {
         email,
         password
       );
+
+      isAuthenticated.value = true;
+      router.push({ name: "user" });
 
       console.log(userCredential);
     } catch (error) {
@@ -32,6 +37,9 @@ export const useAuthStore = defineStore("auth", () => {
         email,
         password
       );
+
+      isAuthenticated.value = true;
+      router.push({ name: "user" });
 
       console.log(userCredential);
     } catch (error) {
