@@ -1,5 +1,5 @@
 <template>
-  <h1>Вход</h1>
+  <h1>Авторизация</h1>
   <form @submit.prevent="onSubmit">
     <p>
       <input type="email" required placeholder="Email" v-model.trim="email" />
@@ -12,7 +12,7 @@
         v-model.trim="password" />
     </p>
     <p>
-      <button type="submit">Войти</button>
+      <button type="submit">Авторизоваться</button>
     </p>
   </form>
 </template>
