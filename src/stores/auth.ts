@@ -2,9 +2,10 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import {
+  User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  User,
+  signOut as $signOut,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -42,10 +43,21 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const signOut = async () => {
+    try {
+      await $signOut(auth);
+      user.value = null;
+      router.push({ name: "SignIn" });
+    } catch (error: unknown) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
   return {
     user,
     isLoggedIn,
     signUp,
     signIn,
+    signOut,
   };
 });
