@@ -1,9 +1,8 @@
-import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
-
+import { createRouter, createWebHistory } from "vue-router";
 import SignUp from "../pages/SignUp.vue";
 import SignIn from "../pages/SignIn.vue";
 
-const routes: RouteRecordRaw[] = [
+const routes = [
   {
     path: "/sign-up",
     name: "signUp",
