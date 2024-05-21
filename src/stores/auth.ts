@@ -6,10 +6,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import type { User } from "firebase/auth";
 
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = ref(false);
-  const user = ref(null);
+  const user = ref<null | User>(null);
   const auth = getAuth();
   const router = useRouter();
 
@@ -22,9 +23,8 @@ export const useAuthStore = defineStore("auth", () => {
       );
 
       isAuthenticated.value = true;
+      user.value = userCredential.user;
       router.push({ name: "user" });
-
-      console.log(userCredential);
     } catch (error) {
       console.log(error);
     }
@@ -39,9 +39,8 @@ export const useAuthStore = defineStore("auth", () => {
       );
 
       isAuthenticated.value = true;
+      user.value = userCredential.user;
       router.push({ name: "user" });
-
-      console.log(userCredential);
     } catch (error) {
       console.log(error);
     }
