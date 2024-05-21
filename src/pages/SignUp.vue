@@ -23,24 +23,14 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuthStore } from "../stores/auth";
 
 const email = ref("");
 const password = ref("");
 
-const auth = getAuth();
+const store = useAuthStore();
 
 const onSubmit = async () => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email.value,
-      password.value
-    );
-
-    console.log(userCredential);
-  } catch (error) {
-    console.log(error);
-  }
+  store.signUp(email.value, password.value);
 };
 </script>
