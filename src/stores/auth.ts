@@ -5,25 +5,24 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
+  User,
 } from "firebase/auth";
-import type { User } from "firebase/auth";
 
 export const useAuthStore = defineStore("auth", () => {
-  const isAuthenticated = ref(false);
-  const user = ref<null | User>(null);
   const auth = getAuth();
   const router = useRouter();
 
+  const user = ref<null | User>(null);
+
+  onAuthStateChanged(auth, (userData) => {
+    user.value = userData;
+  });
+
   const signUp = async (email: string, password: string) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await createUserWithEmailAndPassword(auth, email, password);
 
-      isAuthenticated.value = true;
-      user.value = userCredential.user;
       router.push({ name: "user" });
     } catch (error) {
       console.log(error);
@@ -32,14 +31,8 @@ export const useAuthStore = defineStore("auth", () => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
 
-      isAuthenticated.value = true;
-      user.value = userCredential.user;
       router.push({ name: "user" });
     } catch (error) {
       console.log(error);
@@ -47,7 +40,6 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   return {
-    isAuthenticated,
     user,
     signUp,
     signIn,
