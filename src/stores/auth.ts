@@ -15,8 +15,8 @@ export const useAuthStore = defineStore("auth", () => {
 
   const user = ref<null | User>(null);
 
-  onAuthStateChanged(auth, (userData) => {
-    user.value = userData;
+  onAuthStateChanged(auth, (currentUser) => {
+    user.value = currentUser;
   });
 
   const signUp = async (email: string, password: string) => {
