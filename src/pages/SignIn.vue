@@ -33,9 +33,9 @@ const isLoading = ref(false);
 
 const store = useAuthStore();
 
-const onSubmit = () => {
+const onSubmit = async () => {
   isLoading.value = true;
-  store.signIn(email.value, password.value);
+  await store.signIn(email.value, password.value);
   isLoading.value = false;
 };
 </script>
