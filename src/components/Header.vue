@@ -3,23 +3,37 @@
     <div class="container">
       <div class="header__inner">
         <ul class="header__list">
-          <li>
-            <RouterLink to="/sign-up">Регистрация</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/sign-in">Авторизация</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/">Домашняя</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/user">Пользователь</RouterLink>
+          <li v-for="link in links" :key="link.url">
+            <RouterLink :to="link.url" active-class="active">{{
+              link.text
+            }}</RouterLink>
           </li>
         </ul>
       </div>
     </div>
   </header>
 </template>
+
+<script setup lang="ts">
+const links = [
+  {
+    url: "/sign-up",
+    text: "Регистрация",
+  },
+  {
+    url: "/sign-in",
+    text: "Авторизация",
+  },
+  {
+    url: "/",
+    text: "Домашняя",
+  },
+  {
+    url: "/user",
+    text: "Пользователь",
+  },
+];
+</script>
 
 <style scoped>
 .header {
@@ -38,5 +52,14 @@
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover,
+a.active {
+  text-decoration: underline;
 }
 </style>
