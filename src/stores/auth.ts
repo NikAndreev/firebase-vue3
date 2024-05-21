@@ -2,22 +2,16 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   User,
 } from "firebase/auth";
+import { auth } from "../firebase";
+
+const router = useRouter();
 
 export const useAuthStore = defineStore("auth", () => {
-  const auth = getAuth();
-  const router = useRouter();
-
   const user = ref<null | User>(null);
-
-  onAuthStateChanged(auth, (currentUser) => {
-    user.value = currentUser;
-  });
 
   const signUp = async (email: string, password: string) => {
     try {
