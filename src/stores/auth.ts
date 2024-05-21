@@ -23,7 +23,7 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
 
-      router.push({ name: "user" });
+      router.push({ name: "User" });
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      router.push({ name: "user" });
+      router.push({ name: "User" });
     } catch (error) {
       console.log(error);
     }

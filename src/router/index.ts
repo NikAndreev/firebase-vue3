@@ -7,25 +7,25 @@ import User from "../pages/User.vue";
 const routes = [
   {
     path: "/sign-up",
-    name: "signUp",
+    name: "SignUp",
     component: SignUp,
     meta: { requiresAuth: false },
   },
   {
     path: "/sign-in",
-    name: "signIn",
+    name: "SignIn",
     component: SignIn,
     meta: { requiresAuth: false },
   },
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: Home,
     meta: { requiresAuth: true },
   },
   {
     path: "/user",
-    name: "user",
+    name: "User",
     component: User,
     meta: { requiresAuth: true },
   },
@@ -34,6 +34,11 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from) => {
+  console.log(to);
+  console.log(from);
 });
 
 export default router;
