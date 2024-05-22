@@ -38,6 +38,11 @@ const routes = [
     component: Organizations,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    redirect: { name: "Home" },
+  },
 ];
 
 const router = createRouter({
