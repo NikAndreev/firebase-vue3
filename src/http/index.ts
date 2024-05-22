@@ -1,11 +1,5 @@
-export const http = async (url: string, config: object) => {
-  const res = await fetch(url, config);
+import axios from "axios";
 
-  if (!res.ok) {
-    throw new Error(`Ошибка: ${res.status}`);
-  }
+const http = axios.create();
 
-  const data = await res.json();
-
-  return data;
-};
+export default http;

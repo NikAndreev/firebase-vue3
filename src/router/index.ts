@@ -3,6 +3,7 @@ import SignUp from "../pages/SignUp.vue";
 import SignIn from "../pages/SignIn.vue";
 import Home from "../pages/Home.vue";
 import User from "../pages/User.vue";
+import Organizations from "../pages/Organizations.vue";
 
 import { useAuthStore } from "../stores/auth";
 
@@ -29,6 +30,12 @@ const routes = [
     path: "/user",
     name: "User",
     component: User,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/organizations",
+    name: "Organizations",
+    component: Organizations,
     meta: { requiresAuth: true },
   },
 ];

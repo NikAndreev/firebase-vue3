@@ -27,6 +27,10 @@ const links = [
     text: "Домашняя",
   },
   {
+    url: "/organizations",
+    text: "Организации",
+  },
+  {
     url: "/user",
     text: "Пользователь",
   },
