@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import { useRouter } from "vue-router";
 import http from "../http";
 import type { Tokens } from "../types/Tokens";
 
@@ -8,6 +9,8 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 export const useAuthStore = defineStore("auth", () => {
   const tokens = ref<null | Tokens>(null);
   const isLoggedIn = computed(() => tokens.value !== null);
+
+  const router = useRouter();
 
   const signUp = async (email: string, password: string) => {
     return auth(email, password, "signUp");
@@ -47,11 +50,34 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const refreshTokens = async () => {
+    try {
+      const response = await http({
+        method: "post",
+        url: `https://securetoken.googleapis.com/v1/token?key=${API_KEY}`,
+        data: {
+          grant_type: "refresh_token",
+          refresh_token: tokens.value?.refresh,
+        },
+      });
+      tokens.value = {
+        id: response.data.id_token,
+        refresh: response.data.refresh_token,
+      };
+      localStorage.setItem("tokens", JSON.stringify(tokens.value));
+    } catch (error: unknown) {
+      tokens.value = null;
+      localStorage.removeItem("tokens");
+      router.push({ name: "SignIn" });
+    }
+  };
+
   return {
     tokens,
     isLoggedIn,
     signUp,
     signIn,
     checkUser,
+    refreshTokens,
   };
 });
