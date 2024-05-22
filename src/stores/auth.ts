@@ -35,9 +35,18 @@ export const useAuthStore = defineStore("auth", () => {
         id: response.data.idToken,
         refresh: response.data.refreshToken,
       };
+      localStorage.setItem("tokens", JSON.stringify(tokens.value));
       router.push({ name: "User" });
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
+    }
+  };
+
+  const checkUser = () => {
+    const LSTokens = localStorage.getItem("tokens");
+
+    if (LSTokens) {
+      tokens.value = JSON.parse(LSTokens);
     }
   };
 
@@ -46,5 +55,6 @@ export const useAuthStore = defineStore("auth", () => {
     isLoggedIn,
     signUp,
     signIn,
+    checkUser,
   };
 });

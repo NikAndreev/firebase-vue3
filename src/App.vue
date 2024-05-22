@@ -11,8 +11,13 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from "./stores/auth";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+
+const store = useAuthStore();
+
+store.checkUser();
 </script>
 
 <style scoped>
