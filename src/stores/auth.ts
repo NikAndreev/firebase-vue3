@@ -1,47 +1,40 @@
-import { defineStore } from "pinia";
 import { ref, computed } from "vue";
+import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import http from "../http";
-import type { User } from "../types/User";
+import type { Tokens } from "../types/Tokens";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const useAuthStore = defineStore("auth", () => {
-  const user = ref<null | User>(null);
-  const isLoggedIn = computed(() => user.value !== null);
+  const tokens = ref<null | Tokens>(null);
+  const isLoggedIn = computed(() => tokens.value !== null);
 
   const router = useRouter();
 
   const signUp = async (email: string, password: string) => {
-    try {
-      const response = await http({
-        method: "post",
-        url: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
-        data: {
-          email,
-          password,
-          returnSecureToken: true,
-        },
-      });
-      user.value = response.data;
-      router.push({ name: "User" });
-    } catch (error: unknown) {
-      if (error instanceof Error) alert(error.message);
-    }
+    return auth(email, password, "signUp");
   };
 
   const signIn = async (email: string, password: string) => {
+    return auth(email, password, "signInWithPassword");
+  };
+
+  const auth = async (email: string, password: string, type: string) => {
     try {
       const response = await http({
         method: "post",
-        url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
+        url: `https://identitytoolkit.googleapis.com/v1/accounts:${type}?key=${API_KEY}`,
         data: {
           email,
           password,
           returnSecureToken: true,
         },
       });
-      user.value = response.data;
+      tokens.value = {
+        id: response.data.idToken,
+        refresh: response.data.refreshToken,
+      };
       router.push({ name: "User" });
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
@@ -49,7 +42,7 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   return {
-    user,
+    tokens,
     isLoggedIn,
     signUp,
     signIn,

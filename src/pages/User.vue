@@ -1,13 +1,26 @@
 <template>
   <h1>Пользователь</h1>
-  <p>Email: {{ user?.email }}</p>
+  <Loader v-if="isLoading" />
+  <template v-else>
+    <p>Email: {{ user?.email }}</p>
+  </template>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useAuthStore } from "../stores/auth";
+import { useUserStore } from "../stores/user";
+import Loader from "../components/Loader.vue";
 
-const store = useAuthStore();
+const isLoading = ref(false);
+
+const store = useUserStore();
 
 const { user } = storeToRefs(store);
+
+onMounted(async () => {
+  isLoading.value = true;
+  await store.getUser();
+  isLoading.value = false;
+});
 </script>

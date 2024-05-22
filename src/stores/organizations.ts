@@ -13,7 +13,7 @@ export const useOrganizationsStore = defineStore("organizations", () => {
       const store = useAuthStore();
       const response = await http({
         method: "get",
-        url: `https://vue-authorization-cf9a3-default-rtdb.europe-west1.firebasedatabase.app/organizations.json?auth=${store.user?.idToken}`,
+        url: `https://vue-authorization-cf9a3-default-rtdb.europe-west1.firebasedatabase.app/organizations.json?auth=${store.tokens?.id}`,
       });
       organizations.value = response.data;
     } catch (error: unknown) {
