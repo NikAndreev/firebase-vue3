@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { User } from "firebase/auth";
 
-const API_KEY = "AIzaSyD8u7dS90Wpm43exgTNuTSzzMmtgHqJIME";
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref<null | User>(null);
