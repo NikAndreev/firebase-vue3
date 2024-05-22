@@ -2,39 +2,45 @@
   <header class="header">
     <div class="container">
       <ul class="header__list">
-        <li v-for="link in links" :key="link.url">
-          <RouterLink :to="link.url" active-class="active">{{
-            link.text
-          }}</RouterLink>
-        </li>
+        <template v-if="isLoggedIn">
+          <li>
+            <RouterLink to="/" active-class="active">Домашняя</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/organizations" active-class="active"
+              >Организации</RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink to="/user" active-class="active"
+              >Пользователь</RouterLink
+            >
+          </li>
+        </template>
+        <template v-else>
+          <li>
+            <RouterLink to="/sign-up" active-class="active"
+              >Регистрация</RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink to="/sign-in" active-class="active"
+              >Авторизация</RouterLink
+            >
+          </li>
+        </template>
       </ul>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-const links = [
-  {
-    url: "/sign-up",
-    text: "Регистрация",
-  },
-  {
-    url: "/sign-in",
-    text: "Авторизация",
-  },
-  {
-    url: "/",
-    text: "Домашняя",
-  },
-  {
-    url: "/organizations",
-    text: "Организации",
-  },
-  {
-    url: "/user",
-    text: "Пользователь",
-  },
-];
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "../stores/auth";
+
+const store = useAuthStore();
+
+const { isLoggedIn } = storeToRefs(store);
 </script>
 
 <style scoped>
