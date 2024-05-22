@@ -25,17 +25,25 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 
 const email = ref("");
 const password = ref("");
 const isLoading = ref(false);
 
+const router = useRouter();
+
 const store = useAuthStore();
 
 const onSubmit = async () => {
   isLoading.value = true;
-  await store.signUp(email.value, password.value);
-  isLoading.value = false;
+
+  try {
+    await store.signUp(email.value, password.value);
+    router.push({ name: "User" });
+  } catch {
+    isLoading.value = false;
+  }
 };
 </script>

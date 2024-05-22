@@ -1,6 +1,5 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import { useRouter } from "vue-router";
 import http from "../http";
 import type { Tokens } from "../types/Tokens";
 
@@ -9,8 +8,6 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 export const useAuthStore = defineStore("auth", () => {
   const tokens = ref<null | Tokens>(null);
   const isLoggedIn = computed(() => tokens.value !== null);
-
-  const router = useRouter();
 
   const signUp = async (email: string, password: string) => {
     return auth(email, password, "signUp");
@@ -36,9 +33,9 @@ export const useAuthStore = defineStore("auth", () => {
         refresh: response.data.refreshToken,
       };
       localStorage.setItem("tokens", JSON.stringify(tokens.value));
-      router.push({ name: "User" });
     } catch (error: unknown) {
       if (error instanceof Error) alert(error.message);
+      throw error;
     }
   };
 
