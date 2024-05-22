@@ -46,7 +46,7 @@ router.beforeEach((to) => {
   }
 
   if (!to.meta.requiresAuth && store.isLoggedIn) {
-    return false;
+    return { name: "User" };
   }
 });
 

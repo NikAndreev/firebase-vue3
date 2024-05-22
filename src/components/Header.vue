@@ -1,15 +1,13 @@
 <template>
   <header class="header">
     <div class="container">
-      <div class="header__inner">
-        <ul class="header__list">
-          <li v-for="link in links" :key="link.url">
-            <RouterLink :to="link.url" active-class="active">{{
-              link.text
-            }}</RouterLink>
-          </li>
-        </ul>
-      </div>
+      <ul class="header__list">
+        <li v-for="link in links" :key="link.url">
+          <RouterLink :to="link.url" active-class="active">{{
+            link.text
+          }}</RouterLink>
+        </li>
+      </ul>
     </div>
   </header>
 </template>
@@ -41,13 +39,9 @@ const links = [
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.header__inner {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .header__list {
   display: flex;
+  justify-content: flex-end;
   gap: 15px;
   list-style: none;
   padding: 0;

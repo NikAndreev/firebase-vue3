@@ -14,9 +14,7 @@ const store = useAuthStore();
 
 const { user } = storeToRefs(store);
 
-const onExit = async () => {
-  await store.signOut();
-};
+const onExit = async () => {};
 </script>
 
 <style scoped>

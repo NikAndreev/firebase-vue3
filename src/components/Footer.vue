@@ -17,8 +17,6 @@
 }
 
 .footer__text {
-  max-width: 750px;
-  margin: 0 auto;
   text-align: center;
 }
 </style>
