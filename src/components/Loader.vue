@@ -1,3 +1,3 @@
 <template>
-  <h2>Загрузка...</h2>
+  <div class="text-h5">Загрузка...</div>
 </template>

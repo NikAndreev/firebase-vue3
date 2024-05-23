@@ -1,5 +1,5 @@
 <template>
-  <h1>Домашняя страница</h1>
+  <h1 class="text-h4 mb-4">Домашняя страница</h1>
   <p>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias eos harum
     ullam doloremque fugit voluptas iusto cupiditate labore officiis

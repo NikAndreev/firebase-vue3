@@ -1,13 +1,13 @@
 <template>
-  <div class="wrapper">
+  <v-app>
     <Header />
-    <main class="main">
-      <div class="container">
+    <v-main>
+      <v-container style="max-width: 700px">
         <router-view />
-      </div>
-    </main>
+      </v-container>
+    </v-main>
     <Footer />
-  </div>
+  </v-app>
 </template>
 
 <script setup lang="ts">
@@ -19,15 +19,3 @@ const store = useAuthStore();
 
 store.checkUser();
 </script>
-
-<style scoped>
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.main {
-  flex: 1 1 auto;
-}
-</style>
