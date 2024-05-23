@@ -16,6 +16,14 @@
               >Пользователь</RouterLink
             >
           </li>
+          <li>
+            <RouterLink
+              to="/sign-in"
+              active-class="active"
+              @click.prevent="store.logout"
+              >Выход</RouterLink
+            >
+          </li>
         </template>
         <template v-else>
           <li>

@@ -50,6 +50,12 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const logout = async () => {
+    tokens.value = null;
+    localStorage.removeItem("tokens");
+    router.push({ name: "SignIn" });
+  };
+
   const refreshTokens = async () => {
     try {
       const response = await http({
@@ -66,9 +72,7 @@ export const useAuthStore = defineStore("auth", () => {
       };
       localStorage.setItem("tokens", JSON.stringify(tokens.value));
     } catch (error: unknown) {
-      tokens.value = null;
-      localStorage.removeItem("tokens");
-      router.push({ name: "SignIn" });
+      logout();
     }
   };
 
@@ -78,6 +82,7 @@ export const useAuthStore = defineStore("auth", () => {
     signUp,
     signIn,
     checkUser,
+    logout,
     refreshTokens,
   };
 });
