@@ -22,7 +22,7 @@ export const useUserStore = defineStore("user", () => {
       });
       user.value = response.data.users[0];
     } catch (error: unknown) {
-      if (error instanceof Error) alert(error.message);
+      throw error;
     }
   };
 
@@ -37,9 +37,8 @@ export const useUserStore = defineStore("user", () => {
         },
       });
       user.value = response.data;
-      alert("Информация обновлена!");
     } catch (error: unknown) {
-      if (error instanceof Error) alert(error.message);
+      throw error;
     }
   };
 

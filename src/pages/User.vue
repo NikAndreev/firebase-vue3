@@ -35,19 +35,32 @@ const { user } = storeToRefs(store);
 
 const onSubmit = async () => {
   isPending.value = true;
-  await store.updateUser(name.value);
-  isPending.value = false;
-  reset();
+
+  try {
+    await store.updateUser(name.value);
+    reset();
+    alert("Информация о пользователе обновлена!");
+  } catch (error: unknown) {
+    if (error instanceof Error) alert(error.message);
+  } finally {
+    isPending.value = false;
+  }
 };
 
 const reset = () => {
-  name.value = user.value?.displayName ?? name.value;
+  name.value = user.value?.displayName ?? "";
 };
 
 onMounted(async () => {
   isLoading.value = true;
-  await store.getUser();
-  isLoading.value = false;
-  reset();
+
+  try {
+    await store.getUser();
+    reset();
+  } catch (error: unknown) {
+    if (error instanceof Error) alert(error.message);
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>

@@ -42,7 +42,9 @@ const onSubmit = async () => {
   try {
     await store.signIn(email.value, password.value);
     router.push({ name: "User" });
-  } catch {
+  } catch (error: unknown) {
+    if (error instanceof Error) alert(error.message);
+  } finally {
     isLoading.value = false;
   }
 };

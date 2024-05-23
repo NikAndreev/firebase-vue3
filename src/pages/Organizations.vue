@@ -25,7 +25,13 @@ const { organizations, organizationsCount } = storeToRefs(store);
 
 onMounted(async () => {
   isLoading.value = true;
-  await store.getOrganizations();
-  isLoading.value = false;
+
+  try {
+    await store.getOrganizations();
+  } catch (error: unknown) {
+    if (error instanceof Error) alert(error.message);
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>

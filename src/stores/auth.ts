@@ -37,7 +37,6 @@ export const useAuthStore = defineStore("auth", () => {
       };
       localStorage.setItem("tokens", JSON.stringify(tokens.value));
     } catch (error: unknown) {
-      if (error instanceof Error) alert(error.message);
       throw error;
     }
   };
@@ -72,7 +71,7 @@ export const useAuthStore = defineStore("auth", () => {
       };
       localStorage.setItem("tokens", JSON.stringify(tokens.value));
     } catch (error: unknown) {
-      logout();
+      throw error;
     }
   };
 

@@ -17,12 +17,17 @@ http.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // чтобы не зациклиться при повторном запросе
       const store = useAuthStore();
-      store.refreshTokens();
 
-      // Обновляем токен в originalRequest
+      try {
+        await store.refreshTokens();
 
-      // Повторяем запрос с обновленными токенами
-      // return http(originalRequest);
+        // Обновляем токен в originalRequest
+
+        // Повторяем запрос с обновленными токенами
+        // return http(originalRequest);
+      } catch {
+        store.logout();
+      }
     }
 
     return Promise.reject(error);
