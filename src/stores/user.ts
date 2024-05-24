@@ -26,7 +26,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const updateUser = async (name: string) => {
+  const updateUser = async (name: string, photo: string) => {
     try {
       const response = await http({
         method: "post",
@@ -34,6 +34,7 @@ export const useUserStore = defineStore("user", () => {
         data: {
           idToken: store.tokens?.id,
           displayName: name,
+          photoUrl: photo || user.value?.photoUrl,
         },
       });
       user.value = response.data;
