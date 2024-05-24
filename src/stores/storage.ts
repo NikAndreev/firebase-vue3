@@ -8,7 +8,7 @@ export const useStorageStore = defineStore("storage", () => {
   const store = useAuthStore();
 
   const uploadFile = async (file: File) => {
-    const fileName = `${file.name}#${Date.now()}`;
+    const fileName = `${Date.now()}_${file.name}`;
 
     try {
       const response = await http({
